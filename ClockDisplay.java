@@ -27,7 +27,7 @@ public class ClockDisplay
      */
     public ClockDisplay()
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(24);      // 24-hour internal
         minutes = new NumberDisplay(60);
         updateDisplay();
     }
@@ -81,6 +81,22 @@ public class ClockDisplay
      */
     private void updateDisplay()
     {
+        int hourValue = hours.getValue();
+        String meridian;
+        
+        // Determine AM or PM 
+        if(hourValue < 12) {
+            meridian = "AM";
+        } else {
+            meridian = "PM";
+        }
+        
+        // Convert to 12-hour display 
+        int displayHour = hourValue % 12;
+        
+        if(displayHour == 0) {
+            displayHour = 12;
+        }
         displayString = hours.getDisplayValue() + ":" + 
                         minutes.getDisplayValue();
     }
