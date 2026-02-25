@@ -13,23 +13,24 @@
  * and reacts by incrementing the display. This is done in the usual clock
  * fashion: the hour increments when the minutes roll over to zero.
  * 
- * @author Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author Katie Krause
+ * @version 2026.02.25
  */
 public class ClockDisplay
 {
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
-    
+    private String meridian;         // AM or PM
     /**
      * Constructor for ClockDisplay objects. This constructor 
      * creates a new clock set at 00:00.
      */
     public ClockDisplay()
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(12);      // 12-hour internal
         minutes = new NumberDisplay(60);
+        meridian = "AM";
         updateDisplay();
     }
 
@@ -40,7 +41,7 @@ public class ClockDisplay
      */
     public ClockDisplay(int hour, int minute)
     {
-        hours = new NumberDisplay(24);
+        hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
         setTime(hour, minute);
     }
@@ -54,6 +55,12 @@ public class ClockDisplay
         minutes.increment();
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
+            
+            // when 11 rolls to 12, switch to AM/PM
+            if(hours.getValue() == 12) {
+                toggleMeridian();
+            }
+        
         }
         updateDisplay();
     }
