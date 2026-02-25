@@ -71,8 +71,24 @@ public class ClockDisplay
      */
     public void setTime(int hour, int minute)
     {
-        hours.setValue(hour);
         minutes.setValue(minute);
+        
+        if(hour == 0) {
+            hours.setValue(12);
+            meridian = "AM";
+        }
+        else if(hour < 12) {
+            hours.setValue(hour);
+            meridian = "AM";
+        }
+        else if(hour == 12) {
+            hours.setValue(12);
+            meridian = "PM";
+        }
+        else {
+            hours.setValue(hour - 12);
+            meridian = "PM";
+        }
         updateDisplay();
     }
 
@@ -83,13 +99,24 @@ public class ClockDisplay
     {
         return displayString;
     }
-    
+    /**
+     * Switch between AM and PM
+     */
+    private void toggleMeridian()
+    {
+        if(meridian.equals("AM")) {
+            meridian = "PM"; 
+        } else {
+            meridian = "AM";
+        }
+    }
     /**
      * Update the internal string that represents the display.
      */
     private void updateDisplay()
     {
         displayString = hours.getDisplayValue() + ":" + 
-                        minutes.getDisplayValue();
+                        minutes.getDisplayValue() + 
+                        " " + meridian;
     }
 }
