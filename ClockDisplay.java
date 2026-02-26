@@ -97,7 +97,7 @@ public class ClockDisplay
         if(displayHour == 0) {
             displayHour = 12;
         }
-        displayString = hours.getDisplayValue() + ":" + 
+        displayString = hours.getDisplayValue() + ":" +
                         minutes.getDisplayValue();
     }
 }
